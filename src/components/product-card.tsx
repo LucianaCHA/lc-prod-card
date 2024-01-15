@@ -38,7 +38,7 @@ export const ProductCard = ({
 
   return (
     <Provider value={{ product, counter, increaseBy,maxCount }}>
-      <div className={`${styles.productCard} ${className}`} style={style}>
+      <div className={`${styles.productCard} ${className}`} style={style} data-testid='product-card'>
         {children({
           counter,
           maxCount,

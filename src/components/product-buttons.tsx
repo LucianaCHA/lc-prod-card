@@ -8,10 +8,6 @@ export interface Props {
   className?: string;
   style?: React.CSSProperties;
 }
-export interface Props {
-  className?: string;
-  style?: React.CSSProperties;
-}
 
 export const ProductButtons = ({ className, style }: Props) => {
   const { increaseBy, counter, maxCount } = useContext(ProductContext);

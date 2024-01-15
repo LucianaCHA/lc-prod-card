@@ -1,35 +1,60 @@
 import React from "react";
-import { ProductCard, ProductTitle } from "../../src";
+import { render, screen } from "@testing-library/react";
+import {  ProductCard, ProductTitle } from "../../src";
+import { ProductContext } from "../../src/components/product-card";
+import '@testing-library/jest-dom'
+import { mockProductContextValue, mockProductImage } from "../mocks/mock-products";
 
-import renderer from "react-test-renderer";
-import { mockProducts } from "../mocks/mock-products";
 
+describe("ProductTitle", () => {
+  it("renders the title correctly", () => {
+    render(
+      <ProductContext.Provider value={mockProductContextValue}>
+        <ProductTitle />
+      </ProductContext.Provider>
+    );
+    expect(screen.getByText("Product Title")).toBeInTheDocument();
+  });
 
-describe("ProductTitle componnt test suite", () => {
-  it("should render custom ttestle in the product title", () => {
-    const wrapper = renderer.create(<ProductTitle title="Custom title" />);
+  it("applies the provided className", () => {
+    render(
+      <ProductContext.Provider value={mockProductContextValue}>
+        <ProductTitle className="test-class" />
+      </ProductContext.Provider>
+    );
+    expect(screen.getByText("Product Title")).toHaveClass("test-class");
+  });
 
-    expect(wrapper.toJSON()).toMatchSnapshot();
-  })
-
-  it("should render the title from the product", () => {
-    const wrapper = renderer.create(
-      <ProductCard product={mockProducts[0]} >
-      {
-        () => (<ProductTitle />)
-  }
-      </ProductCard >,
-  );
-
-  expect(wrapper.toJSON()).toMatchSnapshot();
+  it("applies the provided style", () => {
+    render(
+      <ProductContext.Provider value={mockProductContextValue}>
+        <ProductTitle style={{ color: "red" }} />
+              </ProductContext.Provider>
+    );
+    expect(screen.getByText("Product Title")).toHaveStyle("color: red");
+  });
 })
-} );
 
-// import * as ReactDOM from "react-dom";
+describe("it should render inside a ProductCard", () => {
+  it("renders the title correctly", () => {
+    render(
+        <ProductCard 
+        initialValues={{count: 6}}
+        product={mockProductImage}>
+          {
+            () => (
+              
+                <ProductTitle />
+              
+            )
+          }
+        </ProductCard>
+    );
+    expect(screen.getByText("Product 2")).toBeInTheDocument();
+  });
 
-// describe('it', ()=> {
-//   it('renders no crashing', () => {
-//     const div = document.createElement('div');
-//     ReactDOM.unmountComponentAtNode(div);
-//   })
-// })
+})
+
+
+
+
