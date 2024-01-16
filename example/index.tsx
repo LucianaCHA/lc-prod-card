@@ -30,23 +30,7 @@ const App = () => {
                   </>
                 )
               }
-                {/* {
-                    ({ reset, count, isMaxCountReached, maxCount, increaseBy  }) => (
-                        <>
-                            <ProductImage  />
-                            <ProductTitle />
-                            <ProductButtons  />
-                            
-                            <button onClick={ reset }>Reset</button>
-                            <button onClick={ () => increaseBy(-2) }> -2 </button>
-                            {
-                                ( !isMaxCountReached && <button onClick={ ()=> increaseBy(+2) }> +2 </button> )
-                            }
-                            
-                            <span>{ count } - { maxCount }</span>
-                        </>
-                    )
-                } */}
+               
             </ProductCard>
     </>
   );

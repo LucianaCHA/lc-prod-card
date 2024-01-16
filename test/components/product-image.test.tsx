@@ -1,35 +1,55 @@
-import React from "react";
-import { ProductCard, ProductImage } from "../../src";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { ProductImage } from '../../src/components/product-image';
+import { ProductContext } from '../../src/components/product-card';
+import { mockProductContextValue, mockProductImage } from '../mocks/mock-products';
+import '@testing-library/jest-dom';
 
-import renderer from "react-test-renderer";
-import { mockProducts } from "../mocks/mock-products";
+const mockProductContextValueWithImage = {
+  ...mockProductContextValue,
+  product: mockProductImage,
+};
+describe('ProductImage', () => {
+  it('renders the image correctly', () => {
+    render(
+      <ProductContext.Provider value={mockProductContextValueWithImage}>
+        <ProductImage />
+      </ProductContext.Provider>
+    );
 
+    expect(screen.getByAltText('Product 2')).toBeInTheDocument();
+    expect(screen.getByAltText('Product 2')).toHaveAttribute(
+      'src',
+      'https://via.placeholder.com/150'
+    );
+  });
+  it('applies the provided className', () => {
+    render(
+      <ProductContext.Provider value={mockProductContextValueWithImage}>
+        <ProductImage className="test-class" />
+      </ProductContext.Provider>
+    );
 
-describe("ProductImage componnt test suite", () => {
-  it("should render custom ttestle in the product title", () => {
-    const wrapper = renderer.create(<ProductImage img={'xxx'}/>);
+    expect(screen.getByAltText('Product 2')).toHaveClass('test-class');
+    expect(screen.getByAltText('Product 2')).toHaveAttribute(
+      'src',
+      'https://via.placeholder.com/150'
+    );
+  });
 
-    expect(wrapper.toJSON()).toMatchSnapshot();
-  })
+  it('applies the provided style', () => {
+    const style = { width: '100px', height: '100px' };
 
-  it("should render the title from the product", () => {
-    const wrapper = renderer.create(
-      <ProductCard product={mockProducts[1]} >
-      {
-        () => (<ProductImage />)
-  }
-      </ProductCard >,
-  );
+    render(
+      <ProductContext.Provider value={mockProductContextValueWithImage}>
+        <ProductImage style={style} />
+      </ProductContext.Provider>
+    );
 
-  expect(wrapper.toJSON()).toMatchSnapshot();
-})
-} );
-
-// import * as ReactDOM from "react-dom";
-
-// describe('it', ()=> {
-//   it('renders no crashing', () => {
-//     const div = document.createElement('div');
-//     ReactDOM.unmountComponentAtNode(div);
-//   })
-// })
+    expect(screen.getByAltText('Product 2')).toHaveStyle('width: 100px; height: 100px');
+    expect(screen.getByAltText('Product 2')).toHaveAttribute(
+      'src',
+      'https://via.placeholder.com/150'
+    );
+  });
+});

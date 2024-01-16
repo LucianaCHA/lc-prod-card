@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { useContext } from "react";
-import { ProductContext } from "./product-card";
+import { useContext } from 'react';
+import { ProductContext } from './product-card';
 
-import styles from "../styles/styles.module.css";
+import styles from '../styles/styles.module.css';
 
 export interface Props {
-
   className?: string;
   title?: string;
   activeClass?: string;
@@ -18,7 +17,7 @@ export const ProductTitle = ({ className, style }: Props) => {
 
   const { title } = product;
   return (
-    <span className={styles.productDescription + " " + className} style={style}>
+    <span className={styles.productDescription + ' ' + className} style={style}>
       {title}
     </span>
   );
